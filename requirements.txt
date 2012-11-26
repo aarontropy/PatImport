@@ -1,0 +1,5 @@
+Mako==0.7.3
+MarkupSafe==0.15
+SQLAlchemy==0.7.9
+alembic==0.4.0
+mysql-python==1.2.4c1
