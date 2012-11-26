@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, Date, create_engine, Table
 from sqlalchemy.schema import ForeignKey
+from sqlalchemy.orm import relationship
 
 from PatImport.schema import Base, Entity, Judge, Patent, ChoiceType
 
@@ -13,7 +14,7 @@ litigation_plaintiffs = Table('litigation_plaintiffs', Base.metadata,
 	Column('entity_id', Integer, ForeignKey(Entity.id))
 )
 
-litigation_patentes = Table('litigation_patents', Base.metadata,
+litigation_patents = Table('litigation_patents', Base.metadata,
 	Column('litigation_id', Integer, ForeignKey('litigation.id')),
 	Column('patent_id', Integer, ForeignKey(Patent.id))
 )
@@ -31,7 +32,7 @@ class Litigation(Base):
 	caseno	= Column(String(20))
 	court	= Column(String(10))
 	filed	= Column(Date)
-	judge 	= Column(Integer, ForeignKey(Judge.id), backref='cases')
+	judge_id 	= Column(Integer, ForeignKey(Judge.id))
 
 	defendants = relationship('Entity', secondary=litigation_defendants, backref='defense_cases')
 	plaintiffs = relationship('Entity', secondary=litigation_plaintiffs, backref='plaintiff_cases')

@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy.schema import ForeignKey
 
 from PatImport.schema import Base
@@ -52,6 +52,7 @@ class Judge(Person):
 	__mapper_args__ = { 'polymorphic_identity': 'judge'}
 
 	id = Column(Integer, ForeignKey(Person.id), primary_key=True)
+	cases = relationship("Litigation", backref="judge")
 
 class Company(Entity):
 	__tablename__ = 'companies'
