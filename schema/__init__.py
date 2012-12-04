@@ -3,6 +3,10 @@ import sqlalchemy.types as types
 
 Base = declarative_base()
 
+DATABASE = 'Patent_Test'
+USERNAME = 'sqlalchemy'
+PASSWORD = 'sqlalchemy'
+
 
 class ChoiceType(types.TypeDecorator):
 
@@ -17,6 +21,17 @@ class ChoiceType(types.TypeDecorator):
 
     def process_result_value(self, value, dialect):
         return self.choices[value]
+
+def engine():
+	return create_engine('mysql://%(username)s:%(password)s@localhost/%(database)s' % {
+		'username': USERNAME,
+		'password': PASSWORD,
+		'database': DATABASE
+		} )
+
+def create_schema():
+	engine = engine()
+	Base.metadata.create_all(engine)
 
 
 from patent import *

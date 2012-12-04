@@ -5,9 +5,6 @@ from sqlalchemy.schema import ForeignKey
 from PatImport.schema import Base
 from PatImport.schema.entity import Inventor
 
-DATABASE = 'Patent_Test'
-USERNAME = 'sqlalchemy'
-PASSWORD = 'sqlalchemy'
 
 
 
@@ -30,7 +27,7 @@ class Patent(Base):
 
 	inventors = relationship('Inventor', secondary=patent_inventor, backref='patents')
 
-	def __init__(self, number):
+	def __init__(self, number=''):
 		self.number = number
 
 	def __repr__(self):
@@ -150,12 +147,4 @@ class NonPatReference(BaseReference):
 
 
 
-
-def create_schema():
-	engine = create_engine('mysql://%(username)s:%(password)s@localhost/%(database)s' % {
-		'username': USERNAME,
-		'password': PASSWORD,
-		'database': DATABASE
-		} )
-	Base.metadata.create_all(engine)
 
